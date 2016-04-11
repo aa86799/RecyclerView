@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_add"
+        android:title="Add" />
+    <item
+        android:id="@+id/action_del"
+        android:title="Delete" />
+    <item
+        android:id="@+id/action_listview"
+        android:title="ListView" />
+    <item
+        android:id="@+id/action_gridview"
+        android:title="GridView" />
+    <item
+        android:id="@+id/action_hor_gridView"
+        android:title="HorizontalGridView" />
+    <item
+        android:id="@+id/action_staggered"
+        android:title="StaggeredGridView" />
+</menu>
