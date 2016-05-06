@@ -19,9 +19,6 @@ import android.view.ViewGroup;
  */
 public class RichRecyclerView extends RecyclerView {
 
-    private View mLastHasFocusView;
-    private long mKeyTime;
-
     public RichRecyclerView(Context context) {
         this(context, null);
     }
@@ -58,7 +55,7 @@ public class RichRecyclerView extends RecyclerView {
                      * 如果小于或等于 说明滚动到了底部
                      */
                     if (positions[i] >= lm.getItemCount() - columnCount) {
-//                        System.out.println("滑动到底了1");
+                        System.out.println("滑动到底了1");
 
 //                        System.out.println("总adapter的条目数:" + lm.getItemCount()); //内部取的adapter的方法
 //                        System.out.println("总的列数：" + columnCount);
