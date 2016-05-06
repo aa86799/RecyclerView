@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.ViewGroup;
 
@@ -31,9 +30,9 @@ public class StaggeredAdapter extends BaseRecyclerViewAdapter<String> {
 
         for (int i = 0, len = datas.size(); i < len; i++) {
             if (mOrientation == StaggeredGridLayoutManager.VERTICAL) {
-                mWHs.add((int) (100+Math.random()*100));
+                mWHs.add((int) (100 + Math.random() * 100));
             } else {
-                mWHs.add((int) (80+Math.random()*100));
+                mWHs.add((int) (80 + Math.random() * 100));
             }
         }
 
@@ -66,6 +65,7 @@ public class StaggeredAdapter extends BaseRecyclerViewAdapter<String> {
 
     /**
      * 随机颜色
+     *
      * @return
      */
     @CheckResult

@@ -5,9 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
-import com.stone.recyclerview.adapter.MainAdapter;
 import com.stone.recyclerview.adapter.StaggeredAdapter;
-import com.stone.recyclerview.decoration.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +35,8 @@ public class StaggeredActivity extends AppCompatActivity {
 
     private void initDatas() {
         mDatas = new ArrayList<>();
-        for (int i = 'A'; i <= 'z'; i++) {
-            mDatas.add((char) i + "");
+        for (int i = 0; i <= 100; i++) {
+            mDatas.add("四川" + i);
         }
     }
 

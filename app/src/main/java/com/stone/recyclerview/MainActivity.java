@@ -2,10 +2,7 @@ package com.stone.recyclerview;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +10,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Toast;
 
 import com.stone.recyclerview.adapter.BaseRecyclerViewAdapter;
@@ -22,6 +20,9 @@ import com.stone.recyclerview.decoration.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 /**
  * author : stone
@@ -44,12 +45,13 @@ public class MainActivity extends AppCompatActivity {
         initDatas();
 
         initViews();
+
     }
 
     private void initDatas() {
         mDatas = new ArrayList<>();
         for (int i = 'A'; i <= 'z'; i++) {
-            mDatas.add((char) i + "");
+            mDatas.add("中华人民共和国\n美利坚合众国\n南极洲" + i);
         }
     }
 
@@ -57,7 +59,14 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_view);
         mAdapter = new MainAdapter(this, R.layout.item_adapter, mDatas);
 //        mAdapter = new MyTestAdapter(this, mDatas);
-        mRecyclerView.setAdapter(mAdapter);
+
+//        mRecyclerView.setAdapter(mAdapter);
+//        mRecyclerView.setAdapter(new AlphaInAnimationAdapter(mAdapter));
+//        mRecyclerView.setAdapter(new ScaleInAnimationAdapter(mAdapter));
+        mRecyclerView.setAdapter(new SlideInBottomAnimationAdapter(mAdapter));
+//        mRecyclerView.setAdapter(new SlideInRightAnimationAdapter(mAdapter));
+
+
         mRecyclerView.setHasFixedSize(true);
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -66,7 +75,12 @@ public class MainActivity extends AppCompatActivity {
 //        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL_LIST));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
 
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setItemAnimator(new SlideInLeftAnimator(new OvershootInterpolator(1f)));
+        mRecyclerView.getItemAnimator().setAddDuration(500);
+        mRecyclerView.getItemAnimator().setChangeDuration(500);
+        mRecyclerView.getItemAnimator().setMoveDuration(200);
+        mRecyclerView.getItemAnimator().setRemoveDuration(500);
 
         mAdapter.setOnItemClickListener(new BaseRecyclerViewHolder.OnItemClickListener() {
             @Override
@@ -80,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
     }
 
     @Override
@@ -114,12 +129,12 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_add:
                 if (mAdapter instanceof MainAdapter) {
-                    ((MainAdapter)mAdapter).addData("大雪", 2);
+                    ((MainAdapter) mAdapter).addData("大雪", 2);
                 }
                 break;
             case R.id.action_del:
                 if (mAdapter instanceof MainAdapter) {
-                    ((MainAdapter)mAdapter).deleteData("大雪");
+                    ((MainAdapter) mAdapter).deleteData("大雪");
                 }
                 break;
             default:
