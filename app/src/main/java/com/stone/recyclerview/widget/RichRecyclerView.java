@@ -19,6 +19,8 @@ import android.view.ViewGroup;
  */
 public class RichRecyclerView extends RecyclerView {
 
+    private OnScrollToBottomListener mOnScrollToBottomListener;
+
     public RichRecyclerView(Context context) {
         this(context, null);
     }
@@ -31,59 +33,51 @@ public class RichRecyclerView extends RecyclerView {
         super(context, attrs, defStyle);
     }
 
-    @Override
-    protected void onMeasure(int widthSpec, int heightSpec) {
-        super.onMeasure(widthSpec, heightSpec);
+    public interface OnScrollToBottomListener {
+        void onScrollToBottom(int position);
+        void onScrollToBottom(int[] positions);
+    }
+
+    public void setOnScrollToBottomListener(OnScrollToBottomListener onScrollToBottomListener) {
+        this.mOnScrollToBottomListener = onScrollToBottomListener;
     }
 
     @Override
     public void onScrollStateChanged(int state) {
         if (state == RecyclerView.SCROLL_STATE_IDLE) {
             LayoutManager layoutManager = getLayoutManager();
+
             if (layoutManager instanceof StaggeredGridLayoutManager) {
                 StaggeredGridLayoutManager lm = (StaggeredGridLayoutManager) layoutManager;
                 int columnCount = lm.getColumnCountForAccessibility(null, null);
                 int positions[] = new int[columnCount];
                 lm.findLastVisibleItemPositions(positions);
-                for (int i = 0; i < positions.length; i++) {
-//                    System.out.println("当前视图上的最后可见列的位置" + positions[i]);
-                }
+                boolean flag = false;
                 for (int i = 0; i < positions.length; i++) {
                     /**
-                     * 判断lastItem的底边到recyclerView顶部的距离
-                     * 是否小于recyclerView的高度
-                     * 如果小于或等于 说明滚动到了底部
+                     * 判断postions[i] 是否在最后一行
                      */
                     if (positions[i] >= lm.getItemCount() - columnCount) {
-                        System.out.println("滑动到底了1");
-
-//                        System.out.println("总adapter的条目数:" + lm.getItemCount()); //内部取的adapter的方法
-//                        System.out.println("总的列数：" + columnCount);
-//                        System.out.println("符号条件的最后可见列上的position" + positions[i]);
-
                         ViewGroup.LayoutParams layoutParams = lm.findViewByPosition(positions[i]).getLayoutParams();
                         layoutParams.height = lm.findViewByPosition(positions[i]).getHeight() +
                                 getHeight() - lm.findViewByPosition(positions[i]).getBottom();
                         lm.findViewByPosition(positions[i]).setLayoutParams(layoutParams);
+                        flag = true;
                     }
                 }
-                int[] into = new int[columnCount];
-                lm.findFirstCompletelyVisibleItemPositions(into);
-                for (int i = 0; i < into.length; i++) {
-                    System.out.println("首次完全可见的view位置：" + into[i]);
-                }
-
-                lm.findFirstVisibleItemPositions(into);
-                for (int i = 0; i < into.length; i++) {
-                    System.out.println("首次可见的view位置(即使部份可见)：" + into[i]);
+                if (flag) {
+                    if (mOnScrollToBottomListener != null) {
+                        mOnScrollToBottomListener.onScrollToBottom(positions);
+                    }
                 }
 
             } else if (layoutManager instanceof LinearLayoutManager) {
                 LinearLayoutManager lm = (LinearLayoutManager) layoutManager;
                 int position = lm.findLastVisibleItemPosition();
                 if (position + 1 == lm.getItemCount()) {
-                    System.out.println("滑动到底了2");
-
+                    if (mOnScrollToBottomListener != null) {
+                        mOnScrollToBottomListener.onScrollToBottom(position);
+                    }
                 }
             }
         }

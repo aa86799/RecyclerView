@@ -1,6 +1,8 @@
 package com.stone.recyclerview;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,6 +12,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Toast;
 
@@ -29,7 +32,7 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
  * email  : aa86799@163.com
  * time   : 16/4/7 16 42
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private RecyclerView mRecyclerView;
     private List<String> mDatas;
@@ -106,6 +109,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.action_add:
+                if (mAdapter instanceof MainAdapter) {
+                    ((MainAdapter) mAdapter).addData("大雪", 2);
+                }
+                break;
+            case R.id.action_del:
+                if (mAdapter instanceof MainAdapter) {
+                    ((MainAdapter) mAdapter).deleteData("大雪");
+                }
+                break;
             case R.id.action_listview:
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
                 break;
@@ -127,19 +140,34 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, StaggeredActivity.class));
                 break;
 
-            case R.id.action_add:
-                if (mAdapter instanceof MainAdapter) {
-                    ((MainAdapter) mAdapter).addData("大雪", 2);
-                }
+            case R.id.action_swipe:
+                startActivity(new Intent(this, SwipeActivity.class));
                 break;
-            case R.id.action_del:
-                if (mAdapter instanceof MainAdapter) {
-                    ((MainAdapter) mAdapter).deleteData("大雪");
-                }
-                break;
+
+
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            Rect rect = new Rect();
+            getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+            System.out.println("top->" + rect.top + ", bottom->" +rect.bottom);
+            System.out.println(getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop());
+            System.out.println(getWindow().findViewById(Window.ID_ANDROID_CONTENT).getTop() - rect.top);
+
+
+
+            int[] p = new int[2];
+            mRecyclerView.getLocationInWindow(p);
+            System.out.println(">" + p[0] + ", " + p[1]);
+            mRecyclerView.getLocationOnScreen(p);
+            System.out.println(">>>" + p[0] + ", " + p[1]);
+        }
     }
 }

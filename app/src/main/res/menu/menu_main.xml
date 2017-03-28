@@ -19,4 +19,8 @@
     <item
         android:id="@+id/action_staggered"
         android:title="StaggeredGridView" />
+
+    <item
+        android:id="@+id/action_swipe"
+        android:title="下拉刷新" />
 </menu>

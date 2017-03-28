@@ -6,8 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.stone.recyclerview.adapter.StaggeredAdapter;
+import com.stone.recyclerview.widget.RichRecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,7 +19,7 @@ import java.util.List;
  */
 public class StaggeredActivity extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
+    private RichRecyclerView mRecyclerView;
     private List<String> mDatas;
     private RecyclerView.Adapter mAdapter;
 
@@ -26,11 +28,13 @@ public class StaggeredActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.acti_main);
+        setContentView(R.layout.acti_staggered);
 
         initDatas();
 
         initViews();
+
+        initListeners();
     }
 
     private void initDatas() {
@@ -41,7 +45,7 @@ public class StaggeredActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_view);
+        mRecyclerView = (RichRecyclerView) findViewById(R.id.rv_view);
 //        mAdapter = new StaggeredAdapter(this, R.layout.item_adapter, mDatas, StaggeredGridLayoutManager.HORIZONTAL);
         mAdapter = new StaggeredAdapter(this, R.layout.item_adapter, mDatas, StaggeredGridLayoutManager.VERTICAL);
 //        mAdapter = new MyTestAdapter(this, mDatas);
@@ -57,4 +61,19 @@ public class StaggeredActivity extends AppCompatActivity {
         //纵向时 该动态holder.itemview 的高度
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
     }
+
+    private void initListeners() {
+        mRecyclerView.setOnScrollToBottomListener(new RichRecyclerView.OnScrollToBottomListener() {
+            @Override
+            public void onScrollToBottom(int position) {
+
+            }
+
+            @Override
+            public void onScrollToBottom(int[] positions) {
+                System.out.println("滑到底部了，位置有：" + Arrays.toString(positions));
+            }
+        });
+    }
+
 }
