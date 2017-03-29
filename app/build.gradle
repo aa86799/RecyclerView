@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.antfortune.freeline'
 
 android {
     compileSdkVersion 25
@@ -16,6 +17,16 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    freeline {
+        hack true
+        productFlavor "stone"
+//        autoDependency false
+    }
+
+    productFlavors {
+        stone {}
     }
 }
 
