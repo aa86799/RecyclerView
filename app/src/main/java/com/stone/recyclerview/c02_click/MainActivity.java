@@ -134,6 +134,7 @@ public class MainActivity extends Activity {
         ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                clickAnim(v);
                 System.out.println("onItem " + position + "  " + adapter.getItem(position));
             }
         }).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
@@ -226,11 +227,10 @@ public class MainActivity extends Activity {
         public void bindCustomViewHolder(SimplifyVH holder, final int position) {
 
             holder.itemView.setFocusable(true);//加了这句，电视上就能滚动了
-
-            TextView tvTitle = (TextView) holder.itemView.findViewById(R.id.tv_title);
+            TextView tvTitle = holder.getView(R.id.tv_title);
             tvTitle.setText(getItem(position));
 
-            View vImg = holder.itemView.findViewById(R.id.v_img);
+            View vImg = holder.getView(R.id.v_img);
             vImg.setBackgroundColor(getColor());
         }
     }
@@ -268,13 +268,13 @@ public class MainActivity extends Activity {
 
             holder.itemView.setFocusable(true);//加了这句，电视上就能滚动了
 
-            TextView tvTitle = (TextView) holder.itemView.findViewById(R.id.tv_title);
+            TextView tvTitle = holder.getView(R.id.tv_title);
             tvTitle.setText(getItem(position));
 
-            View vImg = holder.itemView.findViewById(R.id.v_img);
+            View vImg = holder.getView(R.id.v_img);
             vImg.setBackgroundColor(getColor());
 
-            final SimplifyVH vh = (SimplifyVH) holder;
+            final SimplifyVH vh = holder;
             vh.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -371,10 +371,10 @@ public class MainActivity extends Activity {
 
             holder.itemView.setFocusable(true);//加了这句，电视上就能滚动了
 
-            TextView tvTitle = (TextView) holder.itemView.findViewById(R.id.tv_title);
+            TextView tvTitle = holder.getView(R.id.tv_title);
             tvTitle.setText(getItem(position));
 
-            View vImg = holder.itemView.findViewById(R.id.v_img);
+            View vImg = holder.getView(R.id.v_img);
             vImg.setBackgroundColor(getColor());
         }
     }

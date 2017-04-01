@@ -44,7 +44,7 @@ public class BaseHolder extends RecyclerView.ViewHolder {
      * @param <T> View的类型
      * @return view
      */
-    protected <T extends View> T getView(@IdRes int viewId){
+    public <T extends View> T getView(@IdRes int viewId){
         View view = mViewArray.get(viewId);
         if (view == null) {
             view = itemView.findViewById(viewId);
@@ -57,7 +57,7 @@ public class BaseHolder extends RecyclerView.ViewHolder {
      * 获取Context实例
      * @return context
      */
-    protected Context getContext() {
+    public Context getContext() {
         return itemView.getContext();
     }
 }
