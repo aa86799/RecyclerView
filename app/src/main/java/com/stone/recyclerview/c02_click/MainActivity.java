@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.stone.recyclerview.R;
 import com.stone.recyclerview.c03_abstract.base.BaseAdapter;
 import com.stone.recyclerview.c03_abstract.base.BaseHolder;
-import com.stone.recyclerview.c03_abstract.base.ItemClickSupport;
 import com.stone.recyclerview.c05_decoration.RectDecoration;
 
 import java.util.ArrayList;
