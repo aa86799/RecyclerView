@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.stone.recyclerview.R;
 import com.stone.recyclerview.c03_abstract.base.BaseAdapter;
 import com.stone.recyclerview.c03_abstract.base.BaseHolder;
+import com.stone.recyclerview.c05_decoration.DividerItemDecoration;
 import com.stone.recyclerview.c05_decoration.RectDecoration;
 
 import java.util.ArrayList;
@@ -68,7 +69,10 @@ public class MainActivity extends Activity {
         mRecyclerView.setLayoutManager(layoutManager);
 
         //add ItemDecoration
-        mRecyclerView.addItemDecoration(new RectDecoration());
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+//        mRecyclerView.addItemDecoration(new android.support.v7.widget.DividerItemDecoration(this,
+//                android.support.v7.widget.DividerItemDecoration.VERTICAL));
+//        mRecyclerView.addItemDecoration(new RectDecoration());
 
     }
 
