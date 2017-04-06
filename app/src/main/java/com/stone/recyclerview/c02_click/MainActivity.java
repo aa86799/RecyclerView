@@ -48,8 +48,8 @@ public class MainActivity extends Activity {
 
 //        addItemClickWay1();
 //        addItemClickWay2();
-//        addItemClickWay3();
-        addItemClickWay4();
+        addItemClickWay3();
+//        addItemClickWay4();
     }
 
     private void initData() {
@@ -123,6 +123,20 @@ public class MainActivity extends Activity {
      */
     private void addItemClickWay3() {
         final ClickAdapter3 adapter = new ClickAdapter3(this, mList);
+        adapter.setListener(new RecyclerItemClickListener.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    android.os.Debug.startMethodTracing();//开始trace
+                    clickAnim(view);
+                    System.out.println("onItemClick ");
+                    android.os.Debug.stopMethodTracing();//结束trace
+                }
+
+                @Override
+                public void onItemLongClick(View view, int position) {
+                    System.out.println("onItemLongClick " + position + "__");
+                }
+        });
         mRecyclerView.setAdapter(adapter);
     }
 
@@ -355,8 +369,8 @@ public class MainActivity extends Activity {
         public SimplifyVHWithListener createCustomViewHolder(ViewGroup parent, int viewType) {
             return new SimplifyVHWithListener(
                     LayoutInflater.from(
-                            parent.getContext()).inflate(R.layout.basic_simple, null, false),
-                    new RecyclerItemClickListener.OnItemClickListener() {
+                            parent.getContext()).inflate(R.layout.basic_simple, null, false), mListener
+                  /*  new RecyclerItemClickListener.OnItemClickListener() {
                         @Override
                         public void onItemClick(View view, int position) {
                             clickAnim(view);
@@ -367,7 +381,7 @@ public class MainActivity extends Activity {
                         public void onItemLongClick(View view, int position) {
                             System.out.println("onItemLongClick " + position + "__" + getItem(position));
                         }
-                    });
+                    }*/);
         }
 
         @Override
