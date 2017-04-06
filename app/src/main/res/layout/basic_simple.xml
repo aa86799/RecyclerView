@@ -13,7 +13,6 @@
 
    <View
        android:id="@+id/v_img"
-       android:layout_below="@id/tv_title"
        android:layout_width="match_parent"
        android:layout_height="100dp"/>
 
