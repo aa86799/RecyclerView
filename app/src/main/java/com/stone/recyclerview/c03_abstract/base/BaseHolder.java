@@ -20,12 +20,22 @@ public class BaseHolder extends RecyclerView.ViewHolder {
     private SparseArray<View> mViewArray;
  
     /**
-     * 构造ViewHolder
+     * 构造ViewHolder  (该方法涉及到parent，不常用)
      * @param parent 父类容器
      * @param resId 布局资源文件id
      */
     public BaseHolder(ViewGroup parent, @LayoutRes int resId) {
         super(LayoutInflater.from(parent.getContext()).inflate(resId, parent, false));
+        mViewArray = new SparseArray<>();
+    }
+
+    /**
+     * 构造ViewHolder
+     * @param context
+     * @param resId 布局资源文件id
+     */
+    public BaseHolder(Context context, @LayoutRes int resId) {
+        super(LayoutInflater.from(context).inflate(resId, null, false));
         mViewArray = new SparseArray<>();
     }
  
