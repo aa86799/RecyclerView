@@ -69,7 +69,6 @@ def getDmtraceDumpDir() {
 task AppFilterMethodOrder() {
     doLast {
         //TODO 替换为你想要过滤的包名
-//        def filterPackageName = "com.zjw.appmethodorder"
         def filterPackageName = "com.stone.recyclerview"
         if (project.hasProperty("package_name")) {
             filterPackageName = project.getProperty("package_name")

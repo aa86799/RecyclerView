@@ -1,16 +1,18 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.antfortune.freeline'
+//apply plugin: 'com.antfortune.freeline'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.stone.recyclerview"
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+
+        flavorDimensions "stone"
     }
 
     signingConfigs {
@@ -34,21 +36,23 @@ android {
         }
     }
 
-    freeline {
+/*    freeline {
         hack true
         productFlavor "stone"
 //        autoDependency false
-    }
+    }*/
 
     productFlavors {
-        stone {}
+        stone {
+            dimension "stone"
+        }
     }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'jp.wasabeef:recyclerview-animators:2.2.3'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'jp.wasabeef:recyclerview-animators:2.2.3'
 }
