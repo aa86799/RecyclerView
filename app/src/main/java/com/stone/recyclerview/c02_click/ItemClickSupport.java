@@ -49,7 +49,9 @@ public class ItemClickSupport {
         }
  
         @Override
-        public void onChildViewDetachedFromWindow(View view) {}
+        public void onChildViewDetachedFromWindow(View view) {
+
+        }
     };
  
     private ItemClickSupport(RecyclerView recyclerView) {

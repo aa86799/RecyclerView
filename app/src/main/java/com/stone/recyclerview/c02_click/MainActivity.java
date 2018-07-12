@@ -19,7 +19,6 @@ import com.stone.recyclerview.R;
 import com.stone.recyclerview.c03_abstract.base.BaseAdapter;
 import com.stone.recyclerview.c03_abstract.base.BaseHolder;
 import com.stone.recyclerview.c05_decoration.DividerItemDecoration;
-import com.stone.recyclerview.c05_decoration.RectDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,18 +123,18 @@ public class MainActivity extends Activity {
     private void addItemClickWay3() {
         final ClickAdapter3 adapter = new ClickAdapter3(this, mList);
         adapter.setListener(new RecyclerItemClickListener.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    android.os.Debug.startMethodTracing();//开始trace
-                    clickAnim(view);
-                    System.out.println("onItemClick ");
-                    android.os.Debug.stopMethodTracing();//结束trace
-                }
+            @Override
+            public void onItemClick(View view, int position) {
+                android.os.Debug.startMethodTracing();//开始trace
+                clickAnim(view);
+                System.out.println("onItemClick ");
+                android.os.Debug.stopMethodTracing();//结束trace
+            }
 
-                @Override
-                public void onItemLongClick(View view, int position) {
-                    System.out.println("onItemLongClick " + position + "__");
-                }
+            @Override
+            public void onItemLongClick(View view, int position) {
+                System.out.println("onItemLongClick " + position + "__");
+            }
         });
         mRecyclerView.setAdapter(adapter);
     }
@@ -149,19 +148,22 @@ public class MainActivity extends Activity {
 
         final ClickAdapter1 adapter = new ClickAdapter1(this, mList);
         mRecyclerView.setAdapter(adapter);
-        ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                clickAnim(v);
-                System.out.println("onItem " + position + "  " + adapter.getItem(position));
-            }
-        }).setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
-                System.out.println("onItemLongClick " + position);
-                return true;
-            }
-        });
+        ItemClickSupport
+                .addTo(mRecyclerView)
+                .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        clickAnim(v);
+                        System.out.println("onItem " + position + "  " + adapter.getItem(position));
+                    }
+                })
+                .setOnItemLongClickListener(new ItemClickSupport.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
+                        System.out.println("onItemLongClick " + position);
+                        return true;
+                    }
+                });
 
         mRecyclerView.postDelayed(new Runnable() {
             @Override
@@ -293,7 +295,7 @@ public class MainActivity extends Activity {
             vImg.setBackgroundColor(getColor());
 
             final SimplifyVH vh = holder;
-            vh.itemView.setOnClickListener(new View.OnClickListener() {
+            vh.itemView.setOnClickListener(new View.OnClickListener() {//bind中调用，会导致频繁set
                 @Override
                 public void onClick(View v) {
                     if (mListener != null) {
@@ -342,6 +344,10 @@ public class MainActivity extends Activity {
                 }
             });
         }
+
+        View getItemView() {
+            return itemView;
+        }
     }
 
     private static class ClickAdapter3 extends BaseAdapter<String, SimplifyVHWithListener> {
@@ -370,18 +376,11 @@ public class MainActivity extends Activity {
             return new SimplifyVHWithListener(
                     LayoutInflater.from(
                             parent.getContext()).inflate(R.layout.basic_simple, null, false), mListener
-                  /*  new RecyclerItemClickListener.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            clickAnim(view);
-                            System.out.println("onItemClick " + getItem(position));
-                        }
 
-                        @Override
-                        public void onItemLongClick(View view, int position) {
-                            System.out.println("onItemLongClick " + position + "__" + getItem(position));
-                        }
-                    }*/);
+                    //或不会传递 listener；
+//                    new SimplifyVHWithListener(...).getItemView().setOnClickListener(...);
+
+            );
         }
 
         @Override
